@@ -3,10 +3,7 @@ package ra.springmvc.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import ra.springmvc.model.Todo;
 import ra.springmvc.service.ITodoService;
 
@@ -39,6 +36,27 @@ public class TodoController {
         // sendredirect
         return "redirect:/todo/list"; // chuyển tới đường dẫn /todo/list
     }
-
+    // edit
+    @GetMapping("/edit/{id}")
+    public String edit(@PathVariable("id") Integer id, Model model){
+        Todo todoEdit = todoService.findById(id);
+        if(todoEdit != null){
+            model.addAttribute("todo", todoEdit);
+            return "edit-todo";
+        }else {
+            throw new RuntimeException("Id not found");
+        }
+    }
+    @PostMapping("/update")
+    public String editSubmit(@ModelAttribute Todo todo){ // annh xạ 1 đối tượng
+        todoService.save(todo);
+        return "redirect:/todo/list";
+    }
     // sửa và xoa
+
+    @GetMapping("/delete/{id}")
+    public String delete(@PathVariable("id") Integer id){
+        todoService.deleteById(id);
+        return "redirect:/todo/list";
+    }
 }

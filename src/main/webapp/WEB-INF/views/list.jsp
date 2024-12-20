@@ -29,8 +29,8 @@
             <td>${todo.details}</td>
             <td>${todo.status?"Đã hoàn thành":"Chưa hoàn thành"}</td>
             <td>
-                <a href="">Sửa</a>
-                <a href="">Xóa</a>
+                <a href="/todo/edit/${todo.id}">Sửa</a>
+                <a href="/todo/delete/${todo.id}">Xóa</a>
             </td>
         </tr>
 
